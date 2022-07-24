@@ -53,12 +53,10 @@ mock.onPost('login').reply((c)=>{
     const data = c.data
     const { userName, password,role } = JSON.parse(data)
     const store = useSystemStore()
+    console.log(store);
+    
     const teachers =store.teachers
     const students = store.students
-    console.log("teachers:")
-    console.log(teachers)
-    console.log("students")
-    console.log(students)
     if (role=="teacher"){
         for(let i=0; i<teachers.length; i++){
             if(teachers[i].userName==userName&&teachers[i].password==password){
@@ -67,7 +65,8 @@ mock.onPost('login').reply((c)=>{
                     200,
                     resulVO,
                     {
-                        token:teachers[i].userName,
+                        token: teachers[i].userName,
+                        token1:teachers[i].name,
                         role:"teacher"
                     }
                 ]
@@ -83,6 +82,7 @@ mock.onPost('login').reply((c)=>{
                     resulVO,
                     {
                         token:students[i].userName,
+                        token1:students[i].name,
                         role:"student"
                     }
                 ]

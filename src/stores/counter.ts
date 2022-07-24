@@ -1,4 +1,4 @@
-import { listStudents, listTeachers, type ResultVO, type Student, type Teacher, type User } from '@/database/Type'
+import { listStudents,listTeachers, type ResultVO, type Student, type Teacher, type User } from '@/database/Type'
 import router from '@/router';
 import axios from 'axios';
 import { defineStore } from 'pinia'
@@ -9,6 +9,9 @@ export const useSystemStore = defineStore({
     teachers:[] as Teacher[],
     students:[] as Student[],
   }),
+
+  
+
   actions: {
     getlistStudents(){
       if(this.students.length==0){
@@ -56,6 +59,26 @@ export const useSystemStore = defineStore({
       }
 
     },
+    delstudent(sName:String,tName:String){
+      for (let i = 0; i < this.students.length; i++) {
+        console.log(sName+" ---  "+tName)
+        if (this.students[i].userName == sName) {
+          console.log(sName+" ---  "+tName)
+          this.students[i].teacherSelect = false
+          this.students[i].teacherName = ""
+          for (let j = 0; j < this.teachers.length; j++) {
+            if (this.teachers[j].userName ==tName) {
+              this.teachers[j].studentsList = this.teachers[j].studentsList.filter(item => item.userName !== this.students[i].userName);
+              console.log("push")
+              console.log(this.students[i])
+              
+            }
+          }
+        }
+      }
+      console.log(sName+"   "+tName)
+
+    },
     remomeStudent(sName:String,tName:String){
       
     },
@@ -66,6 +89,7 @@ export const useSystemStore = defineStore({
         sessionStorage.setItem('token',resp.headers.token)
         sessionStorage.setItem('role',resp.headers.role)
         let path = '/'
+        console.log(resp.headers.role)
         switch (resp.headers.role) {
           case "teacher":
             path = '/teacher'
@@ -84,5 +108,7 @@ export const useSystemStore = defineStore({
   },
   getters: {
    
-  }
+  },
+
+  
 })

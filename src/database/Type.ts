@@ -11,6 +11,7 @@ export interface ResultVO {
   }
 
 export interface Student{
+    name: String
     userName:String
     password:String
     teacherName:String
@@ -18,49 +19,55 @@ export interface Student{
 
 }
 export interface Teacher{
+    name: String
     userName:String
     password:String
     studentNumber:number
     studentsList:Student[]
 }
+
+const teachers:Teacher[]=[
+    {
+        name:"善老师",
+        userName:"001",
+        password:"001",
+        studentNumber:3,
+        studentsList:[
+            {name:'小千',userName:"2001",password:"2001",teacherName:"001",teacherSelect:true},
+            {name:'小曜',userName:"2002",password:"2002",teacherName:"001",teacherSelect:true},
+            {name:'小南',userName:"2003",password:"2003",teacherName:"001",teacherSelect:true},]
+    },
+    {
+        name:"梨老师",
+        userName:"002",
+        password:"002",
+        studentNumber:2,
+        studentsList:[
+            {name:'小丸',userName:"2004",password:"2004",teacherName:"002",teacherSelect:true}]
+    },
+    {
+        name:"鞠莉老师",
+        userName:"003",
+        password:"003",
+        studentNumber:1,
+        studentsList:[]
+    },
+
+]
+const students: Student[] =[
+    {name:'小千',userName:"2001",password:"2001",teacherName:"001",teacherSelect:true},
+    {name:'小曜',userName:"2002",password:"2002",teacherName:"001",teacherSelect:true},
+    {name:'小南',userName:"2003",password:"2003",teacherName:"001",teacherSelect:true},
+    {name:'小丸',userName:"2004",password:"2004",teacherName:"002",teacherSelect:true},
+    {name:'小露',userName:"2005",password:"2005",teacherName:"",teacherSelect:false},
+    {name:'小黛',userName:"2006",password:"2006",teacherName:"",teacherSelect:false},
+]
 export function listStudents():Student[]{
-    const students: Student[] =[
-        {userName:"1001",password:"1001",teacherName:"2001",teacherSelect:true},
-        {userName:"1002",password:"1002",teacherName:"2001",teacherSelect:true},
-        {userName:"1003",password:"1003",teacherName:"2001",teacherSelect:true},
-        {userName:"1004",password:"1004",teacherName:"2002",teacherSelect:true},
-        {userName:"1005",password:"1005",teacherName:"",teacherSelect:false},
-        {userName:"1006",password:"1006",teacherName:"",teacherSelect:false},
-    ]
+    
     return students
 }
 export function listTeachers():Teacher[]{
-    const teachers:Teacher[]=[
-        {userName:"2001",
-            password:"2001",
-            studentNumber:3,
-            studentsList:[
-                {userName:"1001",password:"1001",teacherName:"2001",teacherSelect:true},
-                {userName:"1002",password:"1002",teacherName:"2001",teacherSelect:true},
-                {userName:"1003",password:"1003",teacherName:"2001",teacherSelect:true},]
-        },
-        {userName:"2002",
-            password:"2002",
-            studentNumber:3,
-            studentsList:[
-                {userName:"1004",password:"1004",teacherName:"2002",teacherSelect:true}]
-        },
-        {userName:"2003",
-            password:"2003",
-            studentNumber:3,
-            studentsList:[]
-        },
-        {userName:"2004",
-            password:"2004",
-            studentNumber:3,
-            studentsList:[]
-        }
-    ]
+    
     return teachers
 }
 export function getTeacher(teacherlist:Teacher[],userName:String){
@@ -69,3 +76,4 @@ export function getTeacher(teacherlist:Teacher[],userName:String){
 export function getStudent(studentlist:Student[],userName:String){
     return studentlist.find((student)=>student.userName==userName)
 }
+

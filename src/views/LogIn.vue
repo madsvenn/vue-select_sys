@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { User } from '@/database/Type'
 import { useSystemStore } from '@/stores/counter'
+import { Lock, User as UserIco } from '@element-plus/icons'
 import { ref } from 'vue'
 const store = useSystemStore()
 store.getlistStudents()
@@ -14,6 +15,9 @@ const submit = () => {
   if (!user.value.userName || !user.value.password || !user.value.role) {
     alert('选项不能为空')
   } else {
+    if (user.value.userName == user.value.password) {
+      alert('账号密码相同，记得改一下喵')
+    }
     const theUser: User = {
       userName: user.value.userName,
       password: user.value.password,
@@ -27,111 +31,122 @@ const submit = () => {
 </script>
 
 <template>
-  <div class="loginAll">
-    <table>
-      <thead>
+  <div class="outer">
+    <div class="table111">
+      <table>
         <tr>
-          <th>角色</th>
-          <th>账号</th>
+          <th>姓名</th>
+          <th>教学工号</th>
           <th>密码</th>
         </tr>
-      </thead>
-      <tr>
-        <td>teacher</td>
-        <td>2001</td>
-        <td>2001</td>
-      </tr>
-      <tr>
-        <td>teacher</td>
-        <td>2002</td>
-        <td>2002</td>
-      </tr>
-      <tr>
-        <td>teacher</td>
-        <td>2003</td>
-        <td>2003</td>
-      </tr>
-      <tr>
-        <td>teacher</td>
-        <td>2004</td>
-        <td>2004</td>
-      </tr>
-      <tr>
-        <td>student</td>
-        <td>1001</td>
-        <td>1001</td>
-      </tr>
-      <tr>
-        <td>student</td>
-        <td>1002</td>
-        <td>1002</td>
-      </tr>
-      <tr>
-        <td>student</td>
-        <td>1003</td>
-        <td>1003</td>
-      </tr>
-      <tr>
-        <td>student</td>
-        <td>1004</td>
-        <td>1004</td>
-      </tr>
-      <tr>
-        <td>student</td>
-        <td>1005</td>
-        <td>1005</td>
-      </tr>
-      <tr>
-        <td>student</td>
-        <td>1006</td>
-        <td>1006</td>
-      </tr>
-    </table>
-    <div>
-      <div class="bgDiv">
-        <div class="login">
-          <p><strong>东北林业大学毕设选导师系统</strong></p>
-          <div class="username">
-            <i class="fa fa-user"></i>
-            <input
-              class="userInp"
-              type="text"
-              placeholder="请输入学号/工号"
-              v-model="user.userName"
-            />
+        <tr><td>老师</td></tr>
+        <tr>
+          <td>善老师</td>
+          <td>001</td>
+          <td>001</td>
+        </tr>
+        <tr>
+          <td>梨老师</td>
+          <td>002</td>
+          <td>002</td>
+        </tr>
+        <tr>
+          <td>鞠莉老师</td>
+          <td>003</td>
+          <td>003</td>
+        </tr>
+        <tr>
+          <td>小千</td>
+          <td>2001</td>
+          <td>2001</td>
+        </tr>
+        <tr>
+          <td>小曜</td>
+          <td>2002</td>
+          <td>2002</td>
+        </tr>
+        <tr>
+          <td>小南</td>
+          <td>2003</td>
+          <td>2003</td>
+        </tr>
+        <tr>
+          <td>小丸</td>
+          <td>2004</td>
+          <td>2004</td>
+        </tr>
+        <tr>
+          <td>小露</td>
+          <td>2005</td>
+          <td>2005</td>
+        </tr>
+        <tr>
+          <td>小黛</td>
+          <td>2006</td>
+          <td>2006</td>
+        </tr>
+      </table>
+    </div>
+    <div class="loginAll">
+      <div class="container">
+        <div class="bgDiv">
+          <div class="login">
+            <el-col :span="12" :offset="6" style="margin-top: 15px" center>
+              <el-card class="box-card">
+                <div style="margin-bottom: 15px">
+                  <div class="username">
+                    <i class="fa fa-address-book-o"></i>
+                    <input
+                      type="text"
+                      class="pwdInp"
+                      placeholder="请输入学工号"
+                      v-model="user.userName"
+                      :prefix-icon="UserIco"
+                    />
+                  </div>
+                  <div class="pwd">
+                    <i class="fa fa-eye"></i>
+                    <input
+                      class="pwdInp"
+                      type="password"
+                      placeholder="请输入密码"
+                      v-model="user.password"
+                    />
+                  </div>
+                  <div class="forgetPwd">
+                    <label>
+                      老师
+                      <input
+                        type="radio"
+                        v-model="user.role"
+                        value="teacher"
+                        name="role"
+                      />
+
+                      <i class="fa fa-coffee"></i>
+                    </label>
+                    <br />
+                    <label>
+                      学生
+                      <input
+                        type="radio"
+                        v-model="user.role"
+                        value="student"
+                        name="role"
+                      />
+                      <i class="fa fa-child"></i>
+                    </label>
+                  </div>
+                  <br />
+                  <br />
+                  <br />
+                  <div class="btn1">
+                    <button class="btn" @click="submit">登录</button>
+                  </div>
+                </div>
+              </el-card>
+            </el-col>
           </div>
-          <div class="pwd">
-            <i class="fa fa-book"></i>
-            <input
-              class="pwdInp"
-              type="password"
-              placeholder="请输入密码"
-              v-model="user.password"
-            />
-          </div>
-          <div class="forgetPwd">
-            <span>请选择您的角色 ：</span>
-            <i class="fa fa-arrow-right"></i>
-            <label>
-              <input
-                type="radio"
-                v-model="user.role"
-                value="teacher"
-                name="role"
-              />
-              teacher
-            </label>
-            <label>
-              <input
-                type="radio"
-                v-model="user.role"
-                value="student"
-                name="role"
-              />
-              student
-            </label>
-          </div>
-          <button class="btn" @click="submit">登录</button>
         </div>
       </div>
     </div>
@@ -139,23 +154,34 @@ const submit = () => {
 </template>
 <style scoped>
 table {
-  color: #fff;
 }
 * {
   padding: 0;
   margin: 0;
 }
+th {
+  color: red;
+}
+td {
+  color: black;
+}
 /* #building {
-  
-} */
 
+} */
+.table111 {
+  position: absolute;
+}
 .loginAll {
-  background: url('@/img/pic.jpg');
-  background-color: #4892ff;
-  width: 100%;
+  background: url('@/img/login.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: absolute;
+  width: 70%;
   height: 100%;
-  position: fixed;
-  background-size: 100% 100%;
+  margin: 0 auto;
+  position: absolute;
+  top: 0;
+  right: 15%;
 }
 
 a {
@@ -177,18 +203,17 @@ body {
 }
 
 .login {
-  width: 422px;
-  height: 339px;
-  background: #fff;
+  width: 300px;
+  height: 300px;
   margin-top: 34px;
   margin-left: 50px;
-
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
   margin: auto;
+  background-color: rgba(220, 38, 38, 0.2);
 }
 
 .logoImg {
@@ -202,7 +227,7 @@ body {
 .username,
 .pwd,
 .forgetPwd {
-  width: 366px;
+  width: 250px;
   height: 60px;
   border-bottom: 1px solid #efefef;
   margin: 0 28px;
@@ -216,10 +241,10 @@ body {
 
 .userInp,
 .pwdInp {
-  width: 320px;
+  width: 200px;
   height: 25px;
   margin-top: 18px;
-  border: none;
+  border: 100px;
   outline: none;
   margin-left: 20px;
 }
@@ -227,21 +252,31 @@ body {
 .forgetPwd {
   border: none;
   line-height: 58px;
-  color: #3e82bf;
+  color: blue;
   font-size: 16px;
 }
 
 .forgetLink {
-  padding-left: 5px;
+  padding-left: 6px;
 }
 
-.btn {
-  width: 364px;
+.btn1 {
+  width: 50px;
   height: 40px;
-  background: #4892ff;
+  background: black;
   border: 1px solid #326dcc;
   color: #fff;
   font-size: 16px;
-  margin-left: 30px;
+  margin: 0 auto;
+}
+
+.btn {
+  width: 50px;
+  height: 40px;
+  background: black;
+  border: 1px solid #326dcc;
+  color: #fff;
+  font-size: 16px;
+  margin: 0 auto;
 }
 </style>

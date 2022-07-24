@@ -2,7 +2,11 @@
 import router from '@/router'
 import { useSystemStore } from '@/stores/counter'
 import { ref } from 'vue'
-
+interface EmitType {
+  (e: 'emitClose', data: boolean): void
+}
+const emit = defineEmits<EmitType>()
+const close = () => emit('emitClose', false)
 const userName = sessionStorage.getItem('token')
 const password = ref('')
 const newPassword = ref('')
@@ -13,7 +17,7 @@ const submit = () => {
     !password.value ||
     !newPassword.value
   ) {
-    alert('两次输入需一致且不能为空')
+    alert('密码相同改一下喵~')
     password.value = ''
     newPassword.value = ''
   } else {
@@ -27,65 +31,84 @@ const submit = () => {
 }
 </script>
 <template>
-  <div class="bg">
-    <div class="box">
-      <p>用户名：{{ userName }}</p>
-      <input
-        type="password"
-        required
-        placeholder="新密码"
-        v-model="password"
-        style="height: 40px; width: 200px"
-      />
-      <input
-        type="password"
-        id="2"
-        required
-        placeholder="确认密码"
-        v-model="newPassword"
-        style="height: 40px; width: 200px"
-      />
-      <br />
-      <br />
-      <botton @click="submit">修改</botton>
-      <br />
+  <div class="modal" @click="close">
+    <div class="modal-dialog" @click.stop>
+      <div class="modal-header">
+        <p>用户id：{{ userName }}</p>
+      </div>
+      <div class="modal-content">
+        <input
+          type="password"
+          required
+          placeholder="新密码"
+          v-model="password"
+          style="height: 40px; width: 200px"
+        />
+        <input
+          type="password"
+          id="2"
+          required
+          placeholder="确认密码"
+          v-model="newPassword"
+          style="height: 40px; width: 200px"
+        />
+        <br />
+        <br />
+      </div>
+      <div class="modal-footer">
+        <botton class="btn btn-primary" @click="submit">修改</botton>
+        <br />
+      </div>
     </div>
   </div>
 </template>
 <style scoped>
-.bg {
-  color: rgb(170, 157, 157);
-}
-.box {
-  width: 422px;
-  height: 200px;
-  background: rgb(236, 239, 244);
-  position: absolute;
+.modal {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
   top: 0;
-  right: 0;
-  bottom: 0;
   left: 0;
+  background: rgba(0, 0, 0, 0.2);
+}
+/* 模态框容器中的对话框，实际显示操作的部分。显式声明宽度，基于margin自动居中 */
+.modal .modal-dialog {
+  width: 450px;
   margin: auto;
-  border: 1px solid #0e0f0f;
+  background: white;
+  top: 30px;
+  position: relative;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-input {
-  width: 366px;
-  height: 60px;
-  margin: 0 28px;
+/* 加条下线，作为分割线 */
+.modal .modal-header {
+  padding: 10px;
+  border-bottom: 1px solid #e5e5e5;
 }
-botton {
-  background-color: #ffffff;
-  border: 2px solid #008cba;
-  border-radius: 8px;
-  font-size: 18px;
-  color: #87cefa;
-  padding: 10px 20px;
-  margin: 4px 2px;
-  text-align: center;
-  -webkit-transition-duration: 0.4s; /* Safari */
-  transition-duration: 0.4s;
-  text-decoration: none;
-  overflow: hidden;
+
+/*改变文字大小*/
+.modal .modal-dialog .modal-content {
+  padding: 15px 15px 30px 15px;
+  border-bottom: 1px solid #e5e5e5;
+}
+.modal .modal-dialog .modal-footer {
+  text-align: right;
+  padding: 15px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 10px;
+  margin: 2px;
+  color: white;
+  background: gray;
+  font-size: 1rem;
+  border-radius: 3px;
   cursor: pointer;
+  border: none;
+}
+.btn-primary {
+  background: #007bff;
 }
 </style>

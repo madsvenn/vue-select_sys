@@ -1,13 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
-  </head>
-  <body>
+    <title>导师选择系统</title>
+</head>
+
+<body>
     <div id="app"></div>
     <script type="module" src="/src/main.ts"></script>
-  </body>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(function() {
+            document.getElementById("music1").volume = 0.3;
+            document.getElementById("music1").play();
+        })
+    </script>
+    <audio id="music1" controls="controls" loop autoplay="autoplay" hidden>
+      <source src="music/aqours.mp3" />
+    </audio>
+</body>
+
+
 </html>
